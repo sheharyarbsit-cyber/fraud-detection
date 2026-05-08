@@ -430,13 +430,13 @@ with col_left:
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown("""<div class="card-title">⬡ PCA Features (V21 — V28)</div>""", 
                 unsafe_allow_html=True)
+defaults3 = [-0.18, -0.14, -0.03, 0.01, 0.01, 0.02, -0.01, 0.01]
 
-   defaults3 = [-0.18, -0.14, -0.03, 0.01, 0.01, 0.02, -0.01, 0.01]
+row1 = st.columns(4)
+row2 = st.columns(4)
 
-# First Row (V21 - V24)
-v_cols3_row1 = st.columns(4)
-
-for i, col in enumerate(v_cols3_row1):
+# V21 - V24
+for i, col in enumerate(row1):
     with col:
         v_vals[f'V{i+21}'] = st.number_input(
             f"V{i+21}",
@@ -446,10 +446,8 @@ for i, col in enumerate(v_cols3_row1):
             key=f"v{i+21}"
         )
 
-# Second Row (V25 - V28)
-v_cols3_row2 = st.columns(4)
-
-for i, col in enumerate(v_cols3_row2):
+# V25 - V28
+for i, col in enumerate(row2):
     with col:
         v_vals[f'V{i+25}'] = st.number_input(
             f"V{i+25}",
