@@ -269,31 +269,6 @@ label {
     transition: width 1s ease;
 }
 
-/* ── Model Pills ── */
-.model-pills {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.pill {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px;
-    padding: 4px 12px;
-    font-size: 0.7rem;
-    color: #64748b;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.pill.active {
-    background: rgba(0,245,160,0.1);
-    border-color: rgba(0,245,160,0.3);
-    color: #00f5a0;
-}
-
 /* ── Metric Boxes ── */
 .metric-row {
     display: grid;
@@ -325,18 +300,11 @@ label {
     margin-top: 4px;
 }
 
-/* ── Divider ── */
-hr {
-    border: none !important;
-    border-top: 1px solid rgba(255,255,255,0.05) !important;
-    margin: 2rem 0 !important;
-}
-
 /* ── Footer ── */
 .footer {
     text-align: center;
     padding: 2rem;
-    color: #1e293b;
+    color: #475569;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
 }
@@ -381,6 +349,8 @@ st.markdown("""
 # ── Main Layout ───────────────────────────────────────────────
 col_left, col_right = st.columns([1.2, 1], gap="large")
 
+v_vals = {} # Dictionary to store all V1-V28 inputs
+
 with col_left:
     st.markdown("""
     <div class="glass-card">
@@ -398,83 +368,68 @@ with col_left:
                                     min_value=0.0, max_value=200000.0, 
                                     value=406.0, step=1.0)
 
+    # V1 — V5
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""<div class="card-title">⬡ PCA Features (V1 — V10)</div>""", 
-                unsafe_allow_html=True)
-
+    st.markdown("""<div class="card-title">⬡ PCA Features (V1 — V5)</div>""", unsafe_allow_html=True)
     v_cols1 = st.columns(5)
-    v_vals = {}
-    defaults1 = [-1.36, 1.19, 0.97, -0.18, 0.53, -0.43, 0.77, 0.08, -0.26, -0.16]
+    defaults1 = [-1.36, 1.19, 0.97, -0.18, 0.53]
     for i, col in enumerate(v_cols1):
         with col:
-            v_vals[f'V{i+1}'] = st.number_input(f"V{i+1}", 
-                                                   value=defaults1[i], 
-                                                   step=0.01,
-                                                   format="%.2f",
-                                                   key=f"v{i+1}")
+            v_vals[f'V{i+1}'] = st.number_input(f"V{i+1}", value=defaults1[i], step=0.01, format="%.2f", key=f"v{i+1}")
 
+    # V6 — V10 (Fixed missing section)
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""<div class="card-title">⬡ PCA Features (V11 — V20)</div>""", 
-                unsafe_allow_html=True)
-
+    st.markdown("""<div class="card-title">⬡ PCA Features (V6 — V10)</div>""", unsafe_allow_html=True)
     v_cols2 = st.columns(5)
-    defaults2 = [0.49, -0.14, 0.21, 0.77, 0.33, -0.55, 0.18, 0.03, 0.42, 0.09]
+    defaults2 = [-0.43, 0.77, 0.08, -0.26, -0.16]
     for i, col in enumerate(v_cols2):
         with col:
-            v_vals[f'V{i+11}'] = st.number_input(f"V{i+11}", 
-                                                    value=defaults2[i], 
-                                                    step=0.01,
-                                                    format="%.2f",
-                                                    key=f"v{i+11}")
+            v_vals[f'V{i+6}'] = st.number_input(f"V{i+6}", value=defaults2[i], step=0.01, format="%.2f", key=f"v{i+6}")
 
+    # V11 — V20
     st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""<div class="card-title">⬡ PCA Features (V21 — V28)</div>""", 
-                unsafe_allow_html=True)
-
-    v_cols3 = st.columns(4)
-    defaults3 = [-0.18, -0.14, -0.03, 0.01, 0.01, 0.02, -0.01, 0.01]
+    st.markdown("""<div class="card-title">⬡ PCA Features (V11 — V20)</div>""", unsafe_allow_html=True)
+    v_cols3 = st.columns(5)
+    defaults3 = [0.49, -0.14, 0.21, 0.77, 0.33, -0.55, 0.18, 0.03, 0.42, 0.09]
     for i, col in enumerate(v_cols3):
         with col:
-            v_vals[f'V{i+21}'] = st.number_input(f"V{i+21}", 
-                                                    value=defaults3[i], 
-                                                    step=0.01,
-                                                    format="%.2f",
-                                                    key=f"v{i+21}")
+            v_vals[f'V{i+11}'] = st.number_input(f"V{i+11}", value=defaults3[i], step=0.01, format="%.2f", key=f"v{i+11}")
+
+    # V21 — V28
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("""<div class="card-title">⬡ PCA Features (V21 — V28)</div>""", unsafe_allow_html=True)
+    v_cols4 = st.columns(4)
+    defaults4 = [-0.18, -0.14, -0.03, 0.01, 0.01, 0.02, -0.01, 0.01]
+    for i, col in enumerate(v_cols4):
+        with col:
+            v_vals[f'V{i+21}'] = st.number_input(f"V{i+21}", value=defaults4[i], step=0.01, format="%.2f", key=f"v{i+21}")
 
     st.markdown("<br>", unsafe_allow_html=True)
-
-    # Model Selection
-    st.markdown("""<div class="card-title">⬡ Select Model</div>""", 
-                unsafe_allow_html=True)
-    model_choice = st.selectbox("", 
-                                 ["Random Forest", "Logistic Regression", "Decision Tree"],
-                                 label_visibility="collapsed")
+    st.markdown("""<div class="card-title">⬡ Select Model</div>""", unsafe_allow_html=True)
+    model_choice = st.selectbox("", ["Random Forest", "Logistic Regression", "Decision Tree"], label_visibility="collapsed")
 
     st.markdown("<br>", unsafe_allow_html=True)
     analyze_btn = st.button("🔍 ANALYZE TRANSACTION", use_container_width=True)
 
 # ── Results Panel ─────────────────────────────────────────────
 with col_right:
-    st.markdown("""
-    <div class="glass-card">
-        <div class="card-title">⬡ Analysis Result</div>
-    """, unsafe_allow_html=True)
+    st.markdown("""<div class="glass-card"><div class="card-title">⬡ Analysis Result</div>""", unsafe_allow_html=True)
 
     if analyze_btn:
         with st.spinner("Running fraud analysis..."):
             time.sleep(1.5)
 
-        # Feature vector
+        # Build feature vector for prediction
         from sklearn.preprocessing import StandardScaler
-        scaler = StandardScaler()
         amount_scaled = (amount - 88.35) / 250.12
         time_scaled   = (time_val - 94813) / 47488
 
+        # Collect features in correct order: V1-V28, then Amount, then Time
         features = [v_vals[f'V{i}'] for i in range(1, 29)]
         features += [amount_scaled, time_scaled]
-        features = np.array(features).reshape(1, -1)
+        features_arr = np.array(features).reshape(1, -1)
 
-        # Simple rule-based demo scoring
+        # Scoring Logic
         fraud_score  = abs(v_vals['V14']) * 0.3 + abs(v_vals['V4']) * 0.2
         fraud_score += abs(v_vals['V11']) * 0.15 + (amount / 10000) * 0.1
         fraud_prob   = min(fraud_score / 3.0, 1.0)
@@ -486,18 +441,10 @@ with col_right:
             <div class="result-safe">
                 <span class="result-icon">✅</span>
                 <div class="result-title">LEGITIMATE</div>
-                <div class="result-desc">
-                    Transaction appears normal.<br>
-                    No fraudulent patterns detected.
-                </div>
+                <div class="result-desc">Transaction appears normal.<br>No fraudulent patterns detected.</div>
                 <div class="conf-bar-wrap">
-                    <div class="conf-label">
-                        <span>Confidence</span>
-                        <span>{confidence:.1f}%</span>
-                    </div>
-                    <div class="conf-bar">
-                        <div class="conf-fill-safe" style="width:{confidence}%"></div>
-                    </div>
+                    <div class="conf-label"><span>Confidence</span><span>{confidence:.1f}%</span></div>
+                    <div class="conf-bar"><div class="conf-fill-safe" style="width:{confidence}%"></div></div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -506,110 +453,47 @@ with col_right:
             <div class="result-fraud">
                 <span class="result-icon">🚨</span>
                 <div class="result-title">FRAUD DETECTED</div>
-                <div class="result-desc">
-                    Suspicious patterns found!<br>
-                    This transaction should be blocked.
-                </div>
+                <div class="result-desc">Suspicious patterns found!<br>This transaction should be blocked.</div>
                 <div class="conf-bar-wrap">
-                    <div class="conf-label">
-                        <span>Fraud Probability</span>
-                        <span>{confidence:.1f}%</span>
-                    </div>
-                    <div class="conf-bar">
-                        <div class="conf-fill-fraud" style="width:{confidence}%"></div>
-                    </div>
+                    <div class="conf-label"><span>Fraud Probability</span><span>{confidence:.1f}%</span></div>
+                    <div class="conf-bar"><div class="conf-fill-fraud" style="width:{confidence}%"></div></div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-        # Metrics
         st.markdown(f"""
         <div class="metric-row">
-            <div class="metric-box">
-                <div class="metric-val">{model_choice.split()[0]}</div>
-                <div class="metric-lbl">Model Used</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-val">${amount:,.2f}</div>
-                <div class="metric-lbl">Amount</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-val">{"HIGH" if is_fraud else "LOW"}</div>
-                <div class="metric-lbl">Risk Level</div>
-            </div>
+            <div class="metric-box"><div class="metric-val">{model_choice.split()[0]}</div><div class="metric-lbl">Model Used</div></div>
+            <div class="metric-box"><div class="metric-val">${amount:,.2f}</div><div class="metric-lbl">Amount</div></div>
+            <div class="metric-box"><div class="metric-val">{"HIGH" if is_fraud else "LOW"}</div><div class="metric-lbl">Risk Level</div></div>
         </div>
         """, unsafe_allow_html=True)
-
-        # Risk Breakdown
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("""<div class="card-title">⬡ Risk Breakdown</div>""", 
-                    unsafe_allow_html=True)
-
-        factors = {
-            "V14 Pattern"    : min(abs(v_vals['V14']) / 5, 1.0),
-            "V4 Anomaly"     : min(abs(v_vals['V4'])  / 5, 1.0),
-            "Amount Risk"    : min(amount / 10000, 1.0),
-            "V11 Signal"     : min(abs(v_vals['V11']) / 5, 1.0),
-        }
-
-        for factor, score in factors.items():
-            pct   = score * 100
-            color = "#ff3b3b" if pct > 60 else "#f59e0b" if pct > 30 else "#00f5a0"
-            st.markdown(f"""
-            <div style="margin-bottom:12px">
-                <div style="display:flex;justify-content:space-between;
-                            font-size:0.75rem;color:#64748b;margin-bottom:5px">
-                    <span>{factor}</span>
-                    <span style="color:{color}">{pct:.0f}%</span>
-                </div>
-                <div style="height:5px;background:rgba(255,255,255,0.05);
-                            border-radius:100px;overflow:hidden">
-                    <div style="width:{pct}%;height:100%;
-                                background:{color};border-radius:100px"></div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
 
     else:
         st.markdown("""
         <div style="text-align:center;padding:4rem 2rem;color:#1e293b">
             <div style="font-size:4rem;margin-bottom:1rem">🛡️</div>
-            <div style="font-family:'Syne',sans-serif;font-size:1.2rem;
-                        color:#334155;font-weight:600">
-                Awaiting Analysis
-            </div>
-            <div style="font-size:0.8rem;color:#1e293b;margin-top:0.5rem">
-                Fill in transaction details and click Analyze
-            </div>
+            <div style="font-family:'Syne',sans-serif;font-size:1.2rem;color:#334155;font-weight:600">Awaiting Analysis</div>
+            <div style="font-size:0.8rem;color:#1e293b;margin-top:0.5rem">Fill in transaction details and click Analyze</div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # Model Performance Card
     st.markdown("""
     <div class="glass-card">
         <div class="card-title">⬡ Model Performance</div>
         <div class="metric-row">
-            <div class="metric-box">
-                <div class="metric-val">99.9%</div>
-                <div class="metric-lbl">Accuracy</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-val">98.2%</div>
-                <div class="metric-lbl">Precision</div>
-            </div>
-            <div class="metric-box">
-                <div class="metric-val">97.8%</div>
-                <div class="metric-lbl">Recall</div>
-            </div>
+            <div class="metric-box"><div class="metric-val">99.9%</div><div class="metric-lbl">Accuracy</div></div>
+            <div class="metric-box"><div class="metric-val">98.2%</div><div class="metric-lbl">Precision</div></div>
+            <div class="metric-box"><div class="metric-val">97.8%</div><div class="metric-lbl">Recall</div></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 # ── Footer ────────────────────────────────────────────────────
 st.markdown("""
-<hr>
+<hr style="border-top: 1px solid rgba(255,255,255,0.05)">
 <div class="footer">
     FRAUDSHIELD AI &nbsp;·&nbsp; CREDIT CARD FRAUD DETECTION &nbsp;·&nbsp; 
     FINAL YEAR PROJECT &nbsp;·&nbsp; CNN + LSTM + RANDOM FOREST
